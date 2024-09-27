@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player Preview</title>
+  <title>YouTube Video Player Preview</title>
   <!-- Video.js CSS -->
   <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
-  <!-- Video.js Vimeo plugin -->
-  <script src="https://cdn.jsdelivr.net/npm/videojs-vimeo@2.4.0/dist/videojs-vimeo.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -27,6 +25,7 @@
       max-width: 800px; /* Maxbredd för spelaren */
       height: 450px; /* Höjd på spelaren */
       border: 2px solid #000; /* Tunn svart border */
+      margin-bottom: 20px; /* Utrymme mellan spelare och input */
     }
 
     .video-js {
@@ -37,7 +36,7 @@
 </head>
 <body>
 
-  <h1>Video Player Preview</h1>
+  <h1>YouTube Video Player Preview</h1>
   
   <div class="video-container">
     <video
@@ -45,11 +44,39 @@
       class="video-js vjs-default-skin"
       controls
       preload="auto"
-      data-setup='{"techOrder": ["vimeo"], "sources": [{"type": "video/vimeo", "src": "https://player.vimeo.com/video/618140704"}]}'
+      data-setup='{"techOrder": ["youtube"], "sources": [{"type": "video/youtube", "src": "https://www.youtube.com/watch?v=dQw4w9WgXcQ"}]}'
     ></video>
   </div>
 
+  <input type="text" id="youtube-link" placeholder="Ange YouTube-länk" style="width: 80%; padding: 10px;" />
+  <button id="update-button" style="padding: 10px;">Uppdatera</button>
+
   <!-- Video.js library -->
   <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+  <!-- Video.js YouTube plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/videojs-youtube@2.0.0/dist/Youtube.min.js"></script>
+  <script>
+    const player = videojs('my-video');
+
+    document.getElementById('update-button').addEventListener('click', () => {
+      const link = document.getElementById('youtube-link').value;
+      const videoId = extractVideoID(link);
+      if (videoId) {
+        player.src({
+          type: 'video/youtube',
+          src: `https://www.youtube.com/watch?v=${videoId}`
+        });
+        player.play();
+      } else {
+        alert('Ogiltig YouTube-länk.');
+      }
+    });
+
+    function extractVideoID(url) {
+      const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^&\n]{11})/;
+      const matches = url.match(regex);
+      return matches ? matches[1] : null;
+    }
+  </script>
 </body>
 </html>
