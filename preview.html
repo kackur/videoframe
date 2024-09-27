@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player Preview</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    /* Gör att iframen tar upp 100% av sin container */
+    .iframe-container {
+      width: 100%;
+      max-width: 800px; /* Maxbredd för spelaren */
+      height: 450px; /* Höjd på spelaren */
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Video Player Preview</h1>
+  
+  <!-- Här bäddar vi in iframen -->
+  <iframe class="iframe-container" src="https://kackur.github.io/videoframe/" allowfullscreen></iframe>
+
+</body>
+</html>
