@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player Preview</title>
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet" />
+  <!-- Video.js Vimeo plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/videojs-vimeo@2.4.0/dist/videojs-vimeo.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    /* Gör att videon tar upp 100% av sin container */
+    .video-container {
+      width: 100%;
+      max-width: 800px; /* Maxbredd för spelaren */
+      height: 450px; /* Höjd på spelaren */
+      border: 2px solid #000; /* Tunn svart border */
+    }
+
+    .video-js {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Video Player Preview</h1>
+  
+  <div class="video-container">
+    <video
+      id="my-video"
+      class="video-js vjs-default-skin"
+      controls
+      preload="auto"
+      data-setup='{"techOrder": ["vimeo"], "sources": [{"type": "video/vimeo", "src": "https://player.vimeo.com/video/795990969"}]}'
+    ></video>
+  </div>
+
+  <!-- Video.js library -->
+  <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+</body>
+</html>
