@@ -39,6 +39,7 @@
   <h1>YouTube Video Player Preview</h1>
   
   <div class="video-container">
+    <h2 id="video-title">Videons titel kommer att visas här</h2>
     <video
       id="my-video"
       class="video-js vjs-default-skin"
@@ -57,16 +58,32 @@
   <script src="https://cdn.jsdelivr.net/npm/videojs-youtube@2.0.0/dist/Youtube.min.js"></script>
   <script>
     const player = videojs('my-video');
+    const titleElement = document.getElementById('video-title');
 
     document.getElementById('update-button').addEventListener('click', () => {
       const link = document.getElementById('youtube-link').value;
       const videoId = extractVideoID(link);
       if (videoId) {
-        player.src({
-          type: 'video/youtube',
-          src: `https://www.youtube.com/watch?v=${videoId}`
-        });
-        player.play();
+        // Hämta videons titel från YouTube API
+        fetch(`https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=YOUR_API_KEY&part=snippet`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.items.length > 0) {
+              const title = data.items[0].snippet.title;
+              titleElement.textContent = title; // Visa titeln
+            } else {
+              titleElement.textContent = link; // Visa länken om ingen titel hittas
+            }
+            player.src({
+              type: 'video/youtube',
+              src: `https://www.youtube.com/watch?v=${videoId}`
+            });
+            player.play();
+          })
+          .catch(err => {
+            console.error(err);
+            titleElement.textContent = link; // Visa länken om ett fel inträffar
+          });
       } else {
         alert('Ogiltig YouTube-länk.');
       }
